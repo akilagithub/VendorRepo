@@ -14,6 +14,6 @@ node {
         }
     }
     stage('Application_Deploy') {
-        bat "copy ${workspace}\\target\\petclinic.war ${TOMCAT_HOME}\\webapps\\"
+        bat "copy ${workspace}\\target\\project.war ${TOMCAT_HOME}\\webapps\\"
     }
 }
