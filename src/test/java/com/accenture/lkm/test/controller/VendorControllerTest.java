@@ -30,37 +30,33 @@ public class VendorControllerTest {
 
 	@Autowired
 	private MockMvc mockMvc;
-	
+
 	@MockBean
 	private VendorService vendorServiceMock;
-		
+
 	@Test
 	public void indexVendorControllerTest() throws Exception {
-		mockMvc.perform(MockMvcRequestBuilders.get("/"))
-			.andExpect(status().isOk())
-			.andExpect(content().string("Welcome to Vendor Service API!"));
+		mockMvc.perform(MockMvcRequestBuilders.get("/")).andExpect(status().isOk())
+				.andExpect(content().string("FOR DEMO CHAGED!"));
 	}
-	
+
 	@Test
 	public void vendorListVendorControllerTest() throws Exception {
-		
-		VendorBean bean = new VendorBean("V001", "KZN Textile", "Dombivali" ,"Khozema Nullwala", "9819000000");
-		List<VendorBean> vendorBeans =  new ArrayList<>();
+
+		VendorBean bean = new VendorBean("V001", "KZN Textile", "Dombivali", "Khozema Nullwala", "9819000000");
+		List<VendorBean> vendorBeans = new ArrayList<>();
 		vendorBeans.add(bean);
-		
+
 		when(vendorServiceMock.getVendorDetails()).thenReturn(vendorBeans);
-		
-		
-		mockMvc.perform(MockMvcRequestBuilders.get("/vendor/controller/getVendors"))
-			.andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-            .andExpect(jsonPath("$", hasSize(1)))
-            .andExpect(jsonPath("$[0].vendorId", is("V001")))
-			.andExpect(jsonPath("$[0].vendorName", is("KZN Textile")))
-			.andExpect(jsonPath("$[0].vendorAddress", is("Dombivali")))
-			.andExpect(jsonPath("$[0].contactPerson", is("Khozema Nullwala")))
-			.andExpect(jsonPath("$[0].contactNumber", is("9819000000")));
+
+		mockMvc.perform(MockMvcRequestBuilders.get("/vendor/controller/getVendors")).andExpect(status().isOk())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8)).andExpect(jsonPath("$", hasSize(1)))
+				.andExpect(jsonPath("$[0].vendorId", is("V001")))
+				.andExpect(jsonPath("$[0].vendorName", is("KZN Textile")))
+				.andExpect(jsonPath("$[0].vendorAddress", is("Dombivali")))
+				.andExpect(jsonPath("$[0].contactPerson", is("Khozema Nullwala")))
+				.andExpect(jsonPath("$[0].contactNumber", is("9819000000")));
 
 	}
-	
+
 }

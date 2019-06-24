@@ -19,7 +19,7 @@ public class VendorController {
 	
 	@GetMapping("/")
 	public String index() {
-		return "Welcome to Vendor Service API!";
+		return "FOR DEMO CHAGED!";
 	}
 	
 	@GetMapping("/vendor/controller/getVendors")
