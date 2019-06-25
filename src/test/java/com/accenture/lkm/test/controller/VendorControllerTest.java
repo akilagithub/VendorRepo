@@ -37,7 +37,7 @@ public class VendorControllerTest {
 	@Test
 	public void indexVendorControllerTest() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders.get("/")).andExpect(status().isOk())
-				.andExpect(content().string("FOR DEMO CHAGED!"));
+				.andExpect(content().string("Welcome to Spring Boot Vendor Service API!"));
 	}
 
 	@Test
