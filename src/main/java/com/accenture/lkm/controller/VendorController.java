@@ -19,7 +19,7 @@ public class VendorController {
 	
 	@GetMapping("/")
 	public String index() {
-		return "FOR DEMO CHAGED!";
+		return "Welcome to Spring Boot Vendor Service API!";
 	}
 	
 	@GetMapping("/vendor/controller/getVendors")
