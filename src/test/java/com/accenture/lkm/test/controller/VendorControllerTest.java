@@ -1,7 +1,6 @@
 package com.accenture.lkm.test.controller;
 
 import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -12,6 +11,8 @@ import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -28,6 +29,8 @@ import com.accenture.lkm.service.VendorService;
 @WebMvcTest(VendorController.class)
 public class VendorControllerTest {
 
+	Logger logger = LoggerFactory.getLogger(VendorControllerTest.class);
+	
 	@Autowired
 	private MockMvc mockMvc;
 
@@ -50,12 +53,30 @@ public class VendorControllerTest {
 		when(vendorServiceMock.getVendorDetails()).thenReturn(vendorBeans);
 
 		mockMvc.perform(MockMvcRequestBuilders.get("/vendor/controller/getVendors")).andExpect(status().isOk())
-				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8)).andExpect(jsonPath("$", hasSize(1)))
-				.andExpect(jsonPath("$[0].vendorId", is("V001")))
-				.andExpect(jsonPath("$[0].vendorName", is("KZN Textile")))
-				.andExpect(jsonPath("$[0].vendorAddress", is("Dombivali")))
-				.andExpect(jsonPath("$[0].contactPerson", is("Khozema Nullwala")))
-				.andExpect(jsonPath("$[0].contactNumber", is("9819000000")));
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+				// size of json object
+				.andExpect(jsonPath("$", hasSize(1)))
+                
+				//check if the json node exsits
+                .andExpect(jsonPath("$[0].vendorId").exists())
+                .andExpect(jsonPath("$[0].vendorName").exists())
+                .andExpect(jsonPath("$[0].vendorAddress").exists())
+                .andExpect(jsonPath("$[0].contactPerson").exists())
+                .andExpect(jsonPath("$[0].contactNumber").exists())
+
+                //check the type of json node
+                .andExpect(jsonPath("$[0].vendorId").isString())
+                .andExpect(jsonPath("$[0].vendorName").isString())
+                .andExpect(jsonPath("$[0].vendorAddress").isString())
+                .andExpect(jsonPath("$[0].contactPerson").isString())
+                .andExpect(jsonPath("$[0].contactNumber").isString())
+
+                //check the return value
+                .andExpect(jsonPath("$[0].vendorId").value("V001"))
+                .andExpect(jsonPath("$[0].vendorName").value("KZN Textile"))
+                .andExpect(jsonPath("$[0].vendorAddress").value("Dombivali"))
+                .andExpect(jsonPath("$[0].contactPerson").value("Khozema Nullwala"))
+                .andExpect(jsonPath("$[0].contactNumber").value("9819000000"));				
 
 	}
 
